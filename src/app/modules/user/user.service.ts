@@ -74,3 +74,16 @@ export const deleteUsersFromDBbyEmail = async (payload: string) => {
     console.log(deleteRes);
     return deleteRes;
 }
+
+export const usersMovieAvgAgeGroupFromDB = async () => {
+    const userRes = await User.aggregate([
+        {
+            $group: {
+                _id: '$favorites.movie',
+                age: { $avg: '$age' }
+            }
+        }
+    ]);
+    console.log(userRes);
+    return userRes;
+}
