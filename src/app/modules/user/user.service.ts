@@ -87,3 +87,26 @@ export const usersMovieAvgAgeGroupFromDB = async () => {
     console.log(userRes);
     return userRes;
 }
+
+export const usersAvgAgeFromDBbyFood = async (payload: string) => {
+    const userRes = await User.aggregate([
+        {
+            $match: { 'favorites.food': payload }
+        },
+        {
+            $group: {
+                _id: '$favorites.food',
+                avgAge: { $avg: '$age' }
+            }
+        },
+        {
+            $project: {
+                food: '$_id',
+                avgAge: 1,
+                _id: 0
+            }
+        }
+    ]);
+    console.log(userRes);
+    return userRes;
+}

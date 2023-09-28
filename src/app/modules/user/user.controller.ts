@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express"
-import { deleteUsersFromDBbyEmail, getUsersFromDB, getUsersFromDBbyCity, getUsersFromDBbyColor, getUsersFromDBbyEmail, getUsersFromDBbyFood, updateUsersFromDBbyEmail, usersMovieAvgAgeGroupFromDB } from "./user.service";
+import { deleteUsersFromDBbyEmail, getUsersFromDB, getUsersFromDBbyCity, getUsersFromDBbyColor, getUsersFromDBbyEmail, getUsersFromDBbyFood, updateUsersFromDBbyEmail, usersAvgAgeFromDBbyFood, usersMovieAvgAgeGroupFromDB } from "./user.service";
 
 export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
     const users = await getUsersFromDB();
@@ -81,5 +81,15 @@ export const getUserAvgAgeByMovie = async (req: Request, res: Response, next: Ne
         status: 'success',
         msg: 'Successfully get users group movie age',
         data: usersGroup,
+    });
+};
+
+export const getUserAvgAgeByFood = async (req: Request, res: Response, next: NextFunction) => {
+    const food = req.query.food;
+    const usersAvgAgeRes = await usersAvgAgeFromDBbyFood(food as string);
+    res.status(200).json({
+        status: 'success',
+        msg: 'Successfully get users food with avg age',
+        data: usersAvgAgeRes,
     });
 };
