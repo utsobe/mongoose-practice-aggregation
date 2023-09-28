@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express"
-import { getUsersFromDB, getUsersFromDBbyCity, getUsersFromDBbyColor, getUsersFromDBbyEmail, getUsersFromDBbyFood, updateUsersFromDBbyEmail } from "./user.service";
+import { deleteUsersFromDBbyEmail, getUsersFromDB, getUsersFromDBbyCity, getUsersFromDBbyColor, getUsersFromDBbyEmail, getUsersFromDBbyFood, updateUsersFromDBbyEmail } from "./user.service";
 
 export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
     const users = await getUsersFromDB();
@@ -62,5 +62,15 @@ export const updateUserByEmail = async (req: Request, res: Response, next: NextF
         status: 'success',
         msg: 'Successfully zipcode updated',
         data: updateUserZipcode,
+    });
+};
+
+export const deleteUserByEmail = async (req: Request, res: Response, next: NextFunction) => {
+    const userEmail = req.query.email;
+    const deleteRes = await deleteUsersFromDBbyEmail(userEmail as string);
+    res.status(200).json({
+        status: 'success',
+        msg: 'Successfully delete user',
+        data: deleteRes,
     });
 };

@@ -57,8 +57,6 @@ export const getUsersFromDBbyColor = async (payload: string) => {
 }
 
 export const updateUsersFromDBbyEmail = async (payload: { email: string, zipcode: string }) => {
-
-
     const updateRes = await User.updateOne(
         { email: payload.email },
         {
@@ -67,4 +65,12 @@ export const updateUsersFromDBbyEmail = async (payload: { email: string, zipcode
     );
     console.log(updateRes);
     return updateRes;
+}
+
+export const deleteUsersFromDBbyEmail = async (payload: string) => {
+    const deleteRes = await User.deleteOne(
+        { email: payload },
+    );
+    console.log(deleteRes);
+    return deleteRes;
 }
