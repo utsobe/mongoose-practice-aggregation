@@ -55,3 +55,16 @@ export const getUsersFromDBbyColor = async (payload: string) => {
     ]);
     return users;
 }
+
+export const updateUsersFromDBbyEmail = async (payload: { email: string, zipcode: string }) => {
+
+
+    const updateRes = await User.updateOne(
+        { email: payload.email },
+        {
+            $set: { 'address.zipcode': payload.zipcode }
+        }
+    );
+    console.log(updateRes);
+    return updateRes;
+}

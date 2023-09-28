@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express"
-import { getUsersFromDB, getUsersFromDBbyCity, getUsersFromDBbyColor, getUsersFromDBbyEmail, getUsersFromDBbyFood } from "./user.service";
+import { getUsersFromDB, getUsersFromDBbyCity, getUsersFromDBbyColor, getUsersFromDBbyEmail, getUsersFromDBbyFood, updateUsersFromDBbyEmail } from "./user.service";
 
 export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
     const users = await getUsersFromDB();
@@ -51,5 +51,16 @@ export const getUserByColor = async (req: Request, res: Response, next: NextFunc
         status: 'success',
         msg: 'Successfully get users by color',
         data: userByColor,
+    });
+};
+
+export const updateUserByEmail = async (req: Request, res: Response, next: NextFunction) => {
+
+    const { userEmail, userZipcode } = req.body;
+    const updateUserZipcode = await updateUsersFromDBbyEmail({ email: userEmail, zipcode: userZipcode });
+    res.status(200).json({
+        status: 'success',
+        msg: 'Successfully zipcode updated',
+        data: updateUserZipcode,
     });
 };
